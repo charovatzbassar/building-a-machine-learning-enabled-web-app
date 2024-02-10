@@ -18,6 +18,8 @@ const creds = {
 };
 
 let rekognitionClient = null;
+let textractClient = null;
+
 export async function analyzeImageML(type, imageData) {
   const uimage_bytes = base64ToUint8Array(
     imageData.split("data:application/octet-stream;base64,")[1]
@@ -39,6 +41,17 @@ export async function analyzeImageML(type, imageData) {
         text: response,
       };
       console.log(JSON.stringify(response.Labels));
+    } else if (type == "text") {
+      if (!textractClient) textractClient = new TextractClient(creds);
+      const params = {
+        Document: { Bytes: uimage_bytes },
+      };
+      const query = new DetectDocumentTextCommand(params);
+      let response = await textractClient.send(query);
+      returnData = {
+        type: "success",
+        text: response,
+      };
     }
   } catch (error) {
     returnData = {
