@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import { analyzeImageML } from "../AmazonML.js";
-import { shareImageList, shareSelectedImageIndex, } from "../ImageState";
+import { shareImageList, shareSelectedImageIndex } from "../ImageState";
 let { images } = shareImageList();
 let { selectedImageIndex } = shareSelectedImageIndex();
 
